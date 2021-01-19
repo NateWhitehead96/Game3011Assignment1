@@ -36,13 +36,15 @@ public class GridScript : MonoBehaviour
     }
     void Start()
     {
+        //LoadTiles();
         for (int x = 0; x < cols; x++)
         {
             for (int y = 0; y < rows; y++)
             {
-                if(tiles[x,y].GetComponent<TileScript>().type == tileType.HIGH)
+                if (tiles[x, y].GetComponent<TileScript>().type == tileType.HIGH)
                 {
-                    SecondPass(tiles, x, y, 3);
+                    ThirdPass(tiles, x, y, 2);
+                    SecondPass(tiles, x, y, 1);
                 }
             }
         }
@@ -80,91 +82,154 @@ public class GridScript : MonoBehaviour
 
     private void SecondPass(GameObject[,] objects, int x, int y, int distance)
     {
-        int maxX = x + distance;
+        int maxX = x + distance + 1;
         int minX = x - distance;
-        int maxY = y + distance;
+        int maxY = y + distance + 1;
         int minY = y - distance;
 
-        if(minX < 0)
+        if (minX < 0)
         {
             minX = 0;
         }
-        if(maxX > 24)
+        if (maxX > 24)
         {
             maxX = 24;
         }
-        if(minY < 0)
+        if (minY < 0)
         {
             minY = 0;
         }
-        if(maxY > 24)
+        if (maxY > 24)
         {
             maxY = 24;
         }
+
 
         for (int i = minX; i < maxX; i++)
         {
             for (int j = minY; j < maxY; j++)
             {
-                if(x != i || y != j)
+                if (x != i || y != j)
                 {
                     objects[i, j].GetComponent<TileScript>().type = tileType.MEDIUM;
                 }
 
-                //if(tiles[x,y].GetComponent<TileScript>().type == tileType.HIGH)
-               // {
-                    //for (int i = 0; i < 3; i++)
-                    //{
-                    //    for (int c = 0; c < 3; c++)
-                    //    {
-                    //        //if (tiles[i, c].GetComponent<TileScript>().type != tileType.HIGH)
-                    //        //{
-                    //        tiles[x - 1 + i, y + 1 + c].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //        //}
-                    //    }
-                    //}
-
-                    // medium resources
-                    //if(tiles[x - 1, y] != null)
-                    //{
-
-                    //}
-                    //tiles[x - 1, y].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //tiles[x - 1, y + 1].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //tiles[x, y + 1].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //tiles[x + 1, y + 1].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //tiles[x + 1, y].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //tiles[x + 1, y - 1].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //tiles[x, y - 1].GetComponent<TileScript>().type = tileType.MEDIUM;
-                    //tiles[x - 1, y - 1].GetComponent<TileScript>().type = tileType.MEDIUM;
-
-                    //// low resources
-                    //tiles[x - 2, y].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x - 2, y + 1].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x - 2, y + 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x - 1, y + 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x, y + 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x + 1, y + 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x + 2, y + 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x + 2, y + 1].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x + 2, y].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x + 2, y - 1].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x + 2, y - 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x + 1, y - 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x, y - 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x - 1, y - 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x - 2, y - 2].GetComponent<TileScript>().type = tileType.LOW;
-                    //tiles[x - 2, y - 1].GetComponent<TileScript>().type = tileType.LOW;
-                //}
             }
         }
     }
 
+    private void ThirdPass(GameObject[,] objects, int x, int y, int distance)
+    {
+        int maxX = x + distance + 1;
+        int minX = x - distance;
+        int maxY = y + distance + 1;
+        int minY = y - distance;
+
+        if (minX < 0)
+        {
+            minX = 0;
+        }
+        if (maxX > 24)
+        {
+            maxX = 24;
+        }
+        if (minY < 0)
+        {
+            minY = 0;
+        }
+        if (maxY > 24)
+        {
+            maxY = 24;
+        }
+
+
+        for (int i = minX; i < maxX; i++)
+        {
+            for (int j = minY; j < maxY; j++)
+            {
+                if (x != i || y != j)
+                {
+                    if(objects[i, j].GetComponent<TileScript>().type == tileType.MEDIUM)
+                    {
+                        //skip
+                    }
+                    objects[i, j].GetComponent<TileScript>().type = tileType.LOW;
+                }
+
+            }
+        }
+    }
+
+    private void LoadTiles()
+    {
+        for (int x = 0; x < cols; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                if (tiles[x, y].GetComponent<TileScript>().type == tileType.HIGH)
+                {
+                    if (x >= 0 && y >= 0 && x <= rows && y <= cols)
+                    {
+
+                        if (tiles[x - 1, y] != null)
+                            tiles[x - 1, y].GetComponent<TileScript>().type = tileType.MEDIUM;
+                        if (tiles[x - 1, y + 1] != null)
+                            tiles[x - 1, y + 1].GetComponent<TileScript>().type = tileType.MEDIUM;
+                        if (tiles[x, y + 1] != null)
+                            tiles[x, y + 1].GetComponent<TileScript>().type = tileType.MEDIUM;
+                        if (tiles[x + 1, y + 1] != null)
+                            tiles[x + 1, y + 1].GetComponent<TileScript>().type = tileType.MEDIUM;
+                        if (tiles[x + 1, y] != null)
+                            tiles[x + 1, y].GetComponent<TileScript>().type = tileType.MEDIUM;
+                        if (tiles[x + 1, y - 1] != null)
+                            tiles[x + 1, y - 1].GetComponent<TileScript>().type = tileType.MEDIUM;
+                        if (tiles[x, y - 1] != null)
+                            tiles[x, y - 1].GetComponent<TileScript>().type = tileType.MEDIUM;
+                        if (tiles[x - 1, y - 1] != null)
+                            tiles[x - 1, y - 1].GetComponent<TileScript>().type = tileType.MEDIUM;
+
+                        if (tiles[x - 2, y] != null)
+                            tiles[x - 2, y].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x - 2, y + 1] != null)
+                            tiles[x - 2, y + 1].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x - 2, y + 2] != null)
+                            tiles[x - 2, y + 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x - 1, y + 2] != null)
+                            tiles[x - 1, y + 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x, y + 2] != null)
+                            tiles[x, y + 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x + 1, y + 2] != null)
+                            tiles[x + 1, y + 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x + 2, y + 2] != null)
+                            tiles[x + 2, y + 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x + 2, y + 1] != null)
+                            tiles[x + 2, y + 1].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x + 2, y] != null)
+                            tiles[x + 2, y].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x + 2, y - 1] != null)
+                            tiles[x + 2, y - 1].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x + 2, y - 2] != null)
+                            tiles[x + 2, y - 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x + 1, y - 2] != null)
+                            tiles[x + 1, y - 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x, y - 2] != null)
+                            tiles[x, y - 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x - 1, y - 2] != null)
+                            tiles[x - 1, y - 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x - 2, y - 2] != null)
+                            tiles[x - 2, y - 2].GetComponent<TileScript>().type = tileType.LOW;
+                        if (tiles[x - 2, y - 1] != null)
+                            tiles[x - 2, y - 1].GetComponent<TileScript>().type = tileType.LOW;
+                    }
+                }
+            }
+        }
+    }
 
         //}
 
         // Update is called once per frame
-        void Update()
+    void Update()
     {
         
     }
