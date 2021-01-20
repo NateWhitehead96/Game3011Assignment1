@@ -19,22 +19,22 @@ public class TileScript : MonoBehaviour
     {
         if (type == tileType.EMPTY)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             value = 0;
         }
         if (type == tileType.LOW)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+            //gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
             value = 25;
         }
         if (type == tileType.MEDIUM)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+            //gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
             value = 50;
         }
         if (type == tileType.HIGH)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
             value = 100;
         }
     }
@@ -42,25 +42,54 @@ public class TileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    public void ShowTiles()
+    {
         if (type == tileType.EMPTY)
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-            value = 0;
+            //value = 0;
         }
         if (type == tileType.LOW)
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-            value = 25;
+            //value = 25;
         }
         if (type == tileType.MEDIUM)
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
-            value = 50;
+            //value = 50;
         }
         if (type == tileType.HIGH)
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-            value = 100;
+            //value = 100;
+        }
+    }
+
+    public void HideTiles()
+    {
+        if (type == tileType.EMPTY)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //value = 0;
+        }
+        if (type == tileType.LOW)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //value = 25;
+        }
+        if (type == tileType.MEDIUM)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //value = 50;
+        }
+        if (type == tileType.HIGH)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            //value = 100;
         }
     }
 }
