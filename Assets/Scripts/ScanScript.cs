@@ -19,22 +19,22 @@ public class ScanScript : MonoBehaviour
     void Start()
     {
         toggleCounter.text = "Scan remaining " + counter.ToString();
-        resourceText.text = "Resources collected " + resources.ToString();
+        resourceText.text = "Gold collected " + resources.ToString();
         clickText.text = "Gathering clicks remaining " + clicksRemaining.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0)) // we get if the mouse button was clicked
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePosition.x, mousePosition.y);
 
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-            if(hit.collider != null)
+            if(hit.collider != null) // if our mouse raycast hits a square lets do the some scanning
             {
-                if (toggle.isOn == true && counter > 0) // Scan area
+                if (toggle.isOn == true && counter > 0) // Scan area only if the scan toggle is true and we have clicks in scan mode
                 {
                     counter -= 1;
                     print("toggle working");
@@ -50,7 +50,7 @@ public class ScanScript : MonoBehaviour
                         }
                     }
                 }
-                else if(toggle.isOn == false && clicksRemaining > 0) // gather resource
+                else if(toggle.isOn == false && clicksRemaining > 0) // gather resource if toggle is off and we have extraction clicks
                 {
                     clicksRemaining -= 1;
                     for (int x = 0; x < 24; x++)
@@ -59,7 +59,7 @@ public class ScanScript : MonoBehaviour
                         {
                             if (hit.collider.gameObject.transform.position == GridScript.Instance.tiles[x, y].transform.position)
                             {
-                                Gather(GridScript.Instance.tiles, x, y, 3);
+                                Gather(GridScript.Instance.tiles, x, y, 2);
                             }
 
                         }
@@ -67,8 +67,8 @@ public class ScanScript : MonoBehaviour
                 }
             }
         }
-        toggleCounter.text = "Scan remaining " + counter.ToString();
-        resourceText.text = "Resources collected " + resources.ToString();
+        toggleCounter.text = "Scans remaining " + counter.ToString();
+        resourceText.text = "Gold collected " + resources.ToString();
         clickText.text = "Gathering clicks remaining " + clicksRemaining.ToString();
     }
     private void Scan(GameObject[,] objects, int x, int y, int distance)

@@ -41,17 +41,18 @@ public class GridScript : MonoBehaviour
         {
             for (int y = 0; y < rows; y++)
             {
-                if (tiles[x, y].GetComponent<TileScript>().type == tileType.HIGH)
+                if (tiles[x, y].GetComponent<TileScript>().type == tileType.HIGH) 
                 {
+                    // On start we set all the tiles here. if the tile is high value do 2 passes to set lower values
                     ThirdPass(tiles, x, y, 2);
                     SecondPass(tiles, x, y, 1);
                 }
-                tiles[x, y].SetActive(false);
+                tiles[x, y].SetActive(false); // lastly set them all to inactive so that on input the grid will display
             }
         }
     }
 
-    private void GridSetup()
+    private void GridSetup() // setting up the grid
     {
         int resources = 0;
         tiles = new GameObject[cols, rows];
@@ -150,10 +151,6 @@ public class GridScript : MonoBehaviour
             {
                 if (x != i || y != j)
                 {
-                    if(objects[i, j].GetComponent<TileScript>().type == tileType.MEDIUM)
-                    {
-                        //skip
-                    }
                     objects[i, j].GetComponent<TileScript>().type = tileType.LOW;
                 }
 
@@ -161,11 +158,4 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    
-
-        // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

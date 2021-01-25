@@ -15,7 +15,7 @@ public class TileScript : MonoBehaviour
     public tileType type;
     public int value;
     // Start is called before the first frame update
-    void Start()
+    void Start() // we check to see what type the tile is and set a value
     {
         if (type == tileType.EMPTY)
         {
@@ -39,13 +39,7 @@ public class TileScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void ShowTiles()
+    public void ShowTiles() // helper function that will show the colours of the tiles when scanning
     {
         if (type == tileType.EMPTY)
         {
@@ -69,7 +63,7 @@ public class TileScript : MonoBehaviour
         }
     }
 
-    public void HideTiles()
+    public void HideTiles() // another helper function to hide all the tiles back to white
     {
         if (type == tileType.EMPTY)
         {
